@@ -1,4 +1,4 @@
-Package: DBIConnections
+Package: RDBIConnections
 Type: Package
 Title: Manage DBI connections
 Version: 0.1.0

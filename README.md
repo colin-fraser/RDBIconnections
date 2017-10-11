@@ -34,7 +34,8 @@ With devtools, simply `install.github("colin-fraser/RDBIconnections")`.
 The first thing is to create the connection file. Running `add_connection` for the first time will initialize a new connection file.
 To create the connection listed above, the process looks like this:
 
-```> add_connection()
+```
+> add_connection()
 Connection name: the_connection_you_choose
 Driver constructor in R (e.g. RMariaDB::MariaDB()): RMariaDB::MariaDB()
 Username: colinfraser
@@ -42,7 +43,8 @@ Password (set to "ask" to prompt for password each time): password123
 Host: thehost.myserver.aws.internet.web
 Database name: all_data
 Path to ssl cert: ~/.ssl/ssl_certificate.pem
-Do you wish to add more arguments? [y/n] n```
+Do you wish to add more arguments? [y/n] n
+```
 
 additional arguments are optional additional arguments to the driver constructor that you're working with. If everything is set up properly, you now ought to be able to create a DBI connection with `con <- connect("the_nickname_you_choose")`.
 

@@ -1,16 +1,27 @@
 # RDBIconnections
 ## Manage your DBI connections
 
-This package manages DBI connections by creating a YAML file in your home directory called `RDBIconnections`. The file looks something like this.
+This package manages DBI connections by creating a YAML file in your home directory called `.RDBIconnections`. The file looks something like this.
 
-```the_nickname_you_choose:
+```
+the_nickname_you_choose:
   driver_constructor: RMariaDB::MariaDB()
   args:
     user: colinfraser
     password: password123
     host: thehost.myserver.aws.internet.web
     dbname: all_data
-    ssl.cert: ssl_certificate.pem```
+    ssl.cert: ssl_certificate.pem
+another_one:
+  driver_constructor: RPostgres::Postgress()
+  args:
+    user: post-read
+    password: passpass
+    host: postgress.server.mycompany.internet
+    dbname: arrests
+    ssl.cert: 
+```
+
 
 If this file is set up properly, then you can connect to the server specified by `the_nickname_you_choose` with `con <- connect("the_nickname_you_choose")`.
 

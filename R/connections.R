@@ -1,4 +1,4 @@
-conn_file <- "~/.RDBIconnections"
+conn_file <- path.expand("~/.RDBIconnections")
 
 #' Connect to a database
 #'
@@ -28,6 +28,11 @@ connect <- function(connection_name) {
 #'
 #' @examples
 add_connection <- function() {
+  if (!file.exists(conn_file)) {
+    if (prompt_with_reqs("No connection file found. Create one now? [y/n] ") == "y") {
+      cat("\n", file = conn_file)
+    }
+  }
   existing_connections <- load_connections()
   name <- readline("Connection name: ")
   if (name %in% names(existing_connections)) {
@@ -35,13 +40,13 @@ add_connection <- function() {
       stop("Connection '", name, "' already exists.")
     }
   }
-  driver_constructor <- readline("Driver constructor in R (e.g. RMariaDB::MariaDB()")
+  driver_constructor <- readline("Driver constructor in R (e.g. RMariaDB::MariaDB()): ")
   args <- list(
     user = readline("Username: "),
     password = readline("Password (set to \"ask\" to prompt for password each time): "),
     host = readline("Host: "),
     dbname = readline("Database name: "),
-    ssl.cert = readline("Path to ssl cert: ")
+    ssl.cert = path.expand(readline("Path to ssl cert: "))
   )
   add_args <- prompt_with_reqs("Do you wish to add more arguments? [y/n] ")
   while (add_args == "y") {
@@ -100,5 +105,8 @@ connect_from_spec <- function(spec) {
 }
 
 load_connections <- function() {
-  yaml::yaml.load_file(conn_file)
+  if (file.exists(conn_file)) {
+    return(yaml::yaml.load_file(conn_file))
+  }
+  stop("Connection file not found. Try running add_connection().")
 }
